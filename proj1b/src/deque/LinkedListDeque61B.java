@@ -1,4 +1,7 @@
+package deque;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class LinkedListDeque61B<T> implements Deque61B<T>{
@@ -74,6 +77,9 @@ public class LinkedListDeque61B<T> implements Deque61B<T>{
     @Override
     public List<T> toList() {
         List<T> returnList = new ArrayList<>();
+        if (size == 0) {
+            return returnList;
+        }
         Node p = sentinel.next;
         while (p.item != null) {
             returnList.add(p.item);
@@ -192,6 +198,43 @@ public class LinkedListDeque61B<T> implements Deque61B<T>{
         // recursive case, move to next node, decrease counter
         return getRecursiveHelper(current.next, remaining - 1);
     }
+
+    private class LinkedListDequeIterator implements Iterator<T> {
+
+        private Node current;
+
+        LinkedListDequeIterator() {
+            current = sentinel.next;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return current != sentinel;
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext()) {
+                throw new java.util.NoSuchElementException();
+            }
+            T item = current.item;
+            current = current.next;
+            return item;
+        }
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new LinkedListDequeIterator();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {return true;}
+
+        if (other instanceof Deque61B<?> otherList) {
+            return this.toList().equals(otherList.toList());
+        }
+        return false;
+    }
 }
-
-

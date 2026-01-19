@@ -13,22 +13,22 @@ import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ArrayDeque61BTest {
+public class LinkedListDeque61BTest {
 
-     @Test
-     @DisplayName("deque.ArrayDeque61B has no fields besides backing array and primitives")
-     void noNonTrivialFields() {
-         List<Field> badFields = Reflection.getFields(deque.ArrayDeque61B.class)
-                 .filter(f -> !(f.getType().isPrimitive() || f.getType().equals(Object[].class) || f.isSynthetic()))
-                 .toList();
+    @Test
+    @DisplayName("deque.LinkedListDeque61B has no fields besides nodes and primitives")
+    void noNonTrivialFields() {
+        List<Field> badFields = Reflection.getFields(deque.LinkedListDeque61B.class)
+                .filter(f -> !(f.getType().isPrimitive() || f.getType().equals(Object.class) || f.isSynthetic()))
+                .toList();
 
-         assertWithMessage("Found fields that are not array or primitives").that(badFields).isEmpty();
-     }
+        assertWithMessage("Found fields that are not primitives or Object").that(badFields).isEmpty();
+    }
 
     @Test
     @DisplayName("Test constructor")
     void testConstructor() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
+        LinkedListDeque61B<Integer> deque = new LinkedListDeque61B<>();
         assertThat(deque.isEmpty()).isTrue();
         assertThat(deque.size()).isEqualTo(0);
         assertThat(deque.toList()).isEmpty();
@@ -37,7 +37,7 @@ public class ArrayDeque61BTest {
     @Test
     @DisplayName("Test addFirst on empty deque")
     void testAddFirstEmpty() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
+        LinkedListDeque61B<Integer> deque = new LinkedListDeque61B<>();
         deque.addFirst(1);
         assertThat(deque.isEmpty()).isFalse();
         assertThat(deque.size()).isEqualTo(1);
@@ -47,7 +47,7 @@ public class ArrayDeque61BTest {
     @Test
     @DisplayName("Test addLast on empty deque")
     void testAddLastEmpty() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
+        LinkedListDeque61B<Integer> deque = new LinkedListDeque61B<>();
         deque.addLast(1);
         assertThat(deque.size()).isEqualTo(1);
         assertThat(deque.toList()).containsExactly(1);
@@ -56,7 +56,7 @@ public class ArrayDeque61BTest {
     @Test
     @DisplayName("Test addFirst multiple")
     void testAddFirstMultiple() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
+        LinkedListDeque61B<Integer> deque = new LinkedListDeque61B<>();
         deque.addFirst(1);
         deque.addFirst(2);
         deque.addFirst(3);
@@ -67,7 +67,7 @@ public class ArrayDeque61BTest {
     @Test
     @DisplayName("Test addLast multiple")
     void testAddLastMultiple() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
+        LinkedListDeque61B<Integer> deque = new LinkedListDeque61B<>();
         deque.addLast(1);
         deque.addLast(2);
         deque.addLast(3);
@@ -78,7 +78,7 @@ public class ArrayDeque61BTest {
     @Test
     @DisplayName("Test removeFirst on empty")
     void testRemoveFirstEmpty() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
+        LinkedListDeque61B<Integer> deque = new LinkedListDeque61B<>();
         assertThat(deque.removeFirst()).isNull();
         assertThat(deque.size()).isEqualTo(0);
     }
@@ -86,7 +86,7 @@ public class ArrayDeque61BTest {
     @Test
     @DisplayName("Test removeFirst on one element")
     void testRemoveFirstOne() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
+        LinkedListDeque61B<Integer> deque = new LinkedListDeque61B<>();
         deque.addFirst(1);
         assertThat(deque.removeFirst()).isEqualTo(1);
         assertThat(deque.isEmpty()).isTrue();
@@ -95,7 +95,7 @@ public class ArrayDeque61BTest {
     @Test
     @DisplayName("Test removeFirst multiple")
     void testRemoveFirstMultiple() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
+        LinkedListDeque61B<Integer> deque = new LinkedListDeque61B<>();
         deque.addFirst(1);
         deque.addFirst(2);
         deque.addFirst(3);
@@ -108,14 +108,14 @@ public class ArrayDeque61BTest {
     @Test
     @DisplayName("Test removeLast on empty")
     void testRemoveLastEmpty() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
+        LinkedListDeque61B<Integer> deque = new LinkedListDeque61B<>();
         assertThat(deque.removeLast()).isNull();
     }
 
     @Test
     @DisplayName("Test removeLast one")
     void testRemoveLastOne() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
+        LinkedListDeque61B<Integer> deque = new LinkedListDeque61B<>();
         deque.addLast(1);
         assertThat(deque.removeLast()).isEqualTo(1);
     }
@@ -123,7 +123,7 @@ public class ArrayDeque61BTest {
     @Test
     @DisplayName("Test removeLast multiple")
     void testRemoveLastMultiple() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
+        LinkedListDeque61B<Integer> deque = new LinkedListDeque61B<>();
         deque.addLast(1);
         deque.addLast(2);
         deque.addLast(3);
@@ -135,7 +135,7 @@ public class ArrayDeque61BTest {
     @Test
     @DisplayName("Test get valid index")
     void testGetValid() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
+        LinkedListDeque61B<Integer> deque = new LinkedListDeque61B<>();
         deque.addLast(1);
         deque.addLast(2);
         deque.addLast(3);
@@ -147,7 +147,7 @@ public class ArrayDeque61BTest {
     @Test
     @DisplayName("Test get invalid index")
     void testGetInvalid() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
+        LinkedListDeque61B<Integer> deque = new LinkedListDeque61B<>();
         deque.addLast(1);
         assertThat(deque.get(-1)).isNull();
         assertThat(deque.get(1)).isNull();
@@ -155,16 +155,21 @@ public class ArrayDeque61BTest {
     }
 
     @Test
-    @DisplayName("Test getRecursive throws exception")
+    @DisplayName("Test getRecursive")
     void testGetRecursive() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
-        assertThrows(UnsupportedOperationException.class, () -> deque.getRecursive(0));
+        LinkedListDeque61B<Integer> deque = new LinkedListDeque61B<>();
+        deque.addLast(1);
+        deque.addLast(2);
+        deque.addLast(3);
+        assertThat(deque.getRecursive(0)).isEqualTo(1);
+        assertThat(deque.getRecursive(1)).isEqualTo(2);
+        assertThat(deque.getRecursive(2)).isEqualTo(3);
     }
 
     @Test
     @DisplayName("Test mixed operations")
     void testMixed() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
+        LinkedListDeque61B<Integer> deque = new LinkedListDeque61B<>();
         deque.addFirst(1);
         deque.addLast(2);
         deque.addFirst(0);
@@ -178,73 +183,9 @@ public class ArrayDeque61BTest {
     }
 
     @Test
-    @DisplayName("Test resize on addFirst")
-    void testResizeAddFirst() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
-        for (int i = 0; i < 9; i++) {
-            deque.addFirst(i);
-        }
-        assertThat(deque.size()).isEqualTo(9);
-        assertThat(deque.toList()).containsExactly(8,7,6,5,4,3,2,1,0);
-    }
-
-    @Test
-    @DisplayName("Test resize on addLast")
-    void testResizeAddLast() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
-        for (int i = 0; i < 9; i++) {
-            deque.addLast(i);
-        }
-        assertThat(deque.size()).isEqualTo(9);
-        assertThat(deque.toList()).containsExactly(0,1,2,3,4,5,6,7,8);
-    }
-
-    @Test
-    @DisplayName("Test resize up and operations after")
-    void testResizeUpAndOperations() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
-        // Add enough to trigger resize
-        for (int i = 0; i < 10; i++) {
-            deque.addLast(i);
-        }
-        assertThat(deque.size()).isEqualTo(10);
-        assertThat(deque.toList()).containsExactly(0,1,2,3,4,5,6,7,8,9);
-        // Test get after resize
-        assertThat(deque.get(0)).isEqualTo(0);
-        assertThat(deque.get(9)).isEqualTo(9);
-        // Test remove after resize
-        assertThat(deque.removeFirst()).isEqualTo(0);
-        assertThat(deque.removeLast()).isEqualTo(9);
-        assertThat(deque.size()).isEqualTo(8);
-        assertThat(deque.toList()).containsExactly(1,2,3,4,5,6,7,8);
-    }
-
-    @Test
-    @DisplayName("Test resize down on remove")
-    void testResizeDown() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
-        // Add many to resize up
-        for (int i = 0; i < 12; i++) {
-            deque.addLast(i);
-        }
-        assertThat(deque.size()).isEqualTo(12);
-        // Remove to trigger downsize (if capacity is say 16 or something, but depends)
-        // Since initial 8, resize to 12, then size=12, capacity=12, remove until size<3, then resize to size/2
-        for (int i = 0; i < 10; i++) {
-            deque.removeLast();
-        }
-        assertThat(deque.size()).isEqualTo(2);
-        assertThat(deque.toList()).containsExactly(0,1);
-        // Test operations still work
-        assertThat(deque.removeFirst()).isEqualTo(0);
-        assertThat(deque.removeLast()).isEqualTo(1);
-        assertThat(deque.isEmpty()).isTrue();
-    }
-
-    @Test
     @DisplayName("Test iterator on empty deque")
     void testIteratorEmpty() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
+        LinkedListDeque61B<Integer> deque = new LinkedListDeque61B<>();
         Iterator<Integer> iterator = deque.iterator();
         assertThat(iterator.hasNext()).isFalse();
         assertThrows(java.util.NoSuchElementException.class, iterator::next);
@@ -253,7 +194,7 @@ public class ArrayDeque61BTest {
     @Test
     @DisplayName("Test iterator on deque with elements")
     void testIteratorWithElements() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
+        LinkedListDeque61B<Integer> deque = new LinkedListDeque61B<>();
         deque.addLast(1);
         deque.addLast(2);
         deque.addLast(3);
@@ -271,7 +212,7 @@ public class ArrayDeque61BTest {
     @Test
     @DisplayName("Test iterator does not modify deque")
     void testIteratorNonDestructive() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
+        LinkedListDeque61B<Integer> deque = new LinkedListDeque61B<>();
         deque.addLast(1);
         deque.addLast(2);
         Iterator<Integer> iterator = deque.iterator();
@@ -282,25 +223,10 @@ public class ArrayDeque61BTest {
     }
 
     @Test
-    @DisplayName("Test iterator after resize")
-    void testIteratorAfterResize() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
-        for (int i = 0; i < 10; i++) {
-            deque.addLast(i);
-        }
-        Iterator<Integer> iterator = deque.iterator();
-        for (int i = 0; i < 10; i++) {
-            assertThat(iterator.hasNext()).isTrue();
-            assertThat(iterator.next()).isEqualTo(i);
-        }
-        assertThat(iterator.hasNext()).isFalse();
-    }
-
-    @Test
     @DisplayName("Test equals with empty deques")
     void testEqualsEmpty() {
-        ArrayDeque61B<Integer> deque1 = new ArrayDeque61B<>();
-        ArrayDeque61B<Integer> deque2 = new ArrayDeque61B<>();
+        LinkedListDeque61B<Integer> deque1 = new LinkedListDeque61B<>();
+        LinkedListDeque61B<Integer> deque2 = new LinkedListDeque61B<>();
         assertThat(deque1.equals(deque2)).isTrue();
         assertThat(deque2.equals(deque1)).isTrue();
     }
@@ -308,8 +234,8 @@ public class ArrayDeque61BTest {
     @Test
     @DisplayName("Test equals with same elements")
     void testEqualsSameElements() {
-        ArrayDeque61B<Integer> deque1 = new ArrayDeque61B<>();
-        ArrayDeque61B<Integer> deque2 = new ArrayDeque61B<>();
+        LinkedListDeque61B<Integer> deque1 = new LinkedListDeque61B<>();
+        LinkedListDeque61B<Integer> deque2 = new LinkedListDeque61B<>();
         deque1.addLast(1);
         deque1.addLast(2);
         deque1.addLast(3);
@@ -323,8 +249,8 @@ public class ArrayDeque61BTest {
     @Test
     @DisplayName("Test equals with different elements")
     void testEqualsDifferentElements() {
-        ArrayDeque61B<Integer> deque1 = new ArrayDeque61B<>();
-        ArrayDeque61B<Integer> deque2 = new ArrayDeque61B<>();
+        LinkedListDeque61B<Integer> deque1 = new LinkedListDeque61B<>();
+        LinkedListDeque61B<Integer> deque2 = new LinkedListDeque61B<>();
         deque1.addLast(1);
         deque1.addLast(2);
         deque1.addLast(3);
@@ -336,10 +262,22 @@ public class ArrayDeque61BTest {
     }
 
     @Test
+    @DisplayName("Test equals with different sizes")
+    void testEqualsDifferentSizes() {
+        LinkedListDeque61B<Integer> deque1 = new LinkedListDeque61B<>();
+        LinkedListDeque61B<Integer> deque2 = new LinkedListDeque61B<>();
+        deque1.addLast(1);
+        deque1.addLast(2);
+        deque2.addLast(1);
+        assertThat(deque1.equals(deque2)).isFalse();
+        assertThat(deque2.equals(deque1)).isFalse();
+    }
+
+    @Test
     @DisplayName("Test equals with same elements different order")
     void testEqualsSameElementsDifferentOrder() {
-        ArrayDeque61B<Integer> deque1 = new ArrayDeque61B<>();
-        ArrayDeque61B<Integer> deque2 = new ArrayDeque61B<>();
+        LinkedListDeque61B<Integer> deque1 = new LinkedListDeque61B<>();
+        LinkedListDeque61B<Integer> deque2 = new LinkedListDeque61B<>();
         deque1.addLast(1);
         deque1.addLast(2);
         deque1.addLast(3);
@@ -351,21 +289,9 @@ public class ArrayDeque61BTest {
     }
 
     @Test
-    @DisplayName("Test equals with different sizes")
-    void testEqualsDifferentSizes() {
-        ArrayDeque61B<Integer> deque1 = new ArrayDeque61B<>();
-        ArrayDeque61B<Integer> deque2 = new ArrayDeque61B<>();
-        deque1.addLast(1);
-        deque1.addLast(2);
-        deque2.addLast(1);
-        assertThat(deque1.equals(deque2)).isFalse();
-        assertThat(deque2.equals(deque1)).isFalse();
-    }
-
-    @Test
     @DisplayName("Test equals with same deque")
     void testEqualsSameInstance() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
+        LinkedListDeque61B<Integer> deque = new LinkedListDeque61B<>();
         deque.addLast(1);
         assertThat(deque.equals(deque)).isTrue();
     }
@@ -373,7 +299,7 @@ public class ArrayDeque61BTest {
     @Test
     @DisplayName("Test equals with null")
     void testEqualsNull() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
+        LinkedListDeque61B<Integer> deque = new LinkedListDeque61B<>();
         assertThat(deque.equals(null)).isFalse();
     }
 
@@ -386,14 +312,14 @@ public class ArrayDeque61BTest {
         arrayDeque.addLast(2);
         linkedDeque.addLast(1);
         linkedDeque.addLast(2);
-        assertThat(arrayDeque.equals(linkedDeque)).isTrue();
         assertThat(linkedDeque.equals(arrayDeque)).isTrue();
+        assertThat(arrayDeque.equals(linkedDeque)).isTrue();
     }
 
     @Test
     @DisplayName("Test equals with non-Deque61B object")
     void testEqualsNonDeque() {
-        ArrayDeque61B<Integer> deque = new ArrayDeque61B<>();
+        LinkedListDeque61B<Integer> deque = new LinkedListDeque61B<>();
         deque.addLast(1);
         assertThat(deque.equals("not a deque")).isFalse();
     }

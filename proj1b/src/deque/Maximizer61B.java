@@ -1,5 +1,7 @@
 package deque;
 import java.util.Comparator;
+import java.util.NoSuchElementException;
+import java.util.stream.StreamSupport;
 
 public class Maximizer61B {
     /**
@@ -10,7 +12,10 @@ public class Maximizer61B {
      * @return          the maximum element
      */
     public static <T extends Comparable<T>> T max(Iterable<T> iterable) {
-        return null;
+        // Java stream works like C# LINQ
+        return StreamSupport.stream(iterable.spliterator(), false)
+                .max(Comparable::compareTo)
+                .orElseThrow(() -> new NoSuchElementException("Empty collection"));
     }
 
     /**
@@ -22,17 +27,19 @@ public class Maximizer61B {
      * @return          the maximum element according to the comparator
      */
     public static <T> T max(Iterable<T> iterable, Comparator<T> comp) {
-        return null;
+        return StreamSupport.stream(iterable.spliterator(), false)
+                .max(comp)
+                .orElseThrow(() -> new NoSuchElementException("Empty collection"));
     }
 
     public static void main(String[] args) {
         // The style checker will complain about this main method, feel free to delete.
 
-        // ArrayDeque61B<Integer> ad = new ArrayDeque61B<>();
-        // ad.addLast(5);
-        // ad.addLast(12);
-        // ad.addLast(17);
-        // ad.addLast(23);
-        // System.out.println(max(ad));
+         deque.ArrayDeque61B<Integer> ad = new deque.ArrayDeque61B<>();
+         ad.addLast(5);
+         ad.addLast(12);
+         ad.addLast(17);
+         ad.addLast(23);
+         System.out.println(max(ad));
     }
 }
